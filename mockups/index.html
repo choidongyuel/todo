@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>할일 관리 앱 - 디자인 시안 비교</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .mockups-container {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mockup {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .mockup-info {
+            padding: 24px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .mockup-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .mockup-philosophy {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .mockup-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            font-size: 13px;
+        }
+
+        .detail-item {
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            color: #666;
+        }
+
+        .mockup-preview {
+            padding: 24px;
+            min-height: 600px;
+        }
+
+        /* ===== 시안 A: Apple Reminders 스타일 ===== */
+        .mockup-a {
+            background: #ffffff;
+        }
+
+        .mockup-a .app-header {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .mockup-a .input-field {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .mockup-a .input-field::before {
+            content: "+";
+            margin-right: 12px;
+            font-weight: 300;
+            font-size: 20px;
+            color: #007AFF;
+        }
+
+        .mockup-a .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 12px;
+        }
+
+        .mockup-a .filter-tab {
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #666;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .mockup-a .filter-tab.active {
+            color: #007AFF;
+            border-bottom-color: #007AFF;
+            font-weight: 600;
+        }
+
+        .mockup-a .task-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 16px;
+        }
+
+        .mockup-a .task-checkbox {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            border: 2px solid #d0d0d0;
+            border-radius: 50%;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .mockup-a .task-content {
+            flex: 1;
+            color: #333;
+        }
+
+        .mockup-a .task-priority {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #666;
+            background: #f0f0f0;
+            margin-left: 8px;
+        }
+
+        .mockup-a .task-item.completed .task-content {
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        /* ===== 시안 B: 진도 바 강조 ===== */
+        .mockup-b {
+            background: #ffffff;
+        }
+
+        .mockup-b .app-header {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .mockup-b .progress-section {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .mockup-b .progress-item {
+            margin-bottom: 16px;
+        }
+
+        .mockup-b .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .mockup-b .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e5e5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .mockup-b .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #FF6B6B 0%, #FF9F6F 100%);
+        }
+
+        .mockup-b .progress-item:nth-child(2) .progress-fill {
+            background: linear-gradient(90deg, #4ECDC4 0%, #44A3A0 100%);
+        }
+
+        .mockup-b .progress-item:nth-child(3) .progress-fill {
+            background: linear-gradient(90deg, #95E1D3 0%, #70C1B3 100%);
+        }
+
+        .mockup-b .input-field {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .mockup-b .input-field::before {
+            content: "+";
+            margin-right: 12px;
+            font-weight: 300;
+            font-size: 20px;
+            color: #007AFF;
+        }
+
+        .mockup-b .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 12px;
+        }
+
+        .mockup-b .filter-tab {
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #666;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .mockup-b .filter-tab.active {
+            color: #007AFF;
+            border-bottom-color: #007AFF;
+            font-weight: 600;
+        }
+
+        .mockup-b .task-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 16px;
+        }
+
+        .mockup-b .task-checkbox {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            border: 2px solid #d0d0d0;
+            border-radius: 50%;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .mockup-b .task-content {
+            flex: 1;
+            color: #333;
+        }
+
+        .mockup-b .task-category {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: white;
+            background: #FF6B6B;
+            margin-left: 8px;
+        }
+
+        .mockup-b .task-item:nth-child(2) .task-category,
+        .mockup-b .task-item:nth-child(3) .task-category {
+            background: #4ECDC4;
+        }
+
+        .mockup-b .task-priority {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #666;
+            background: #f0f0f0;
+            margin-left: 4px;
+        }
+
+        /* ===== 시안 C: 카드 기반 ===== */
+        .mockup-c {
+            background: #fafafa;
+        }
+
+        .mockup-c .app-header {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .mockup-c .input-card {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            font-size: 16px;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .mockup-c .input-card::before {
+            content: "+";
+            margin-right: 12px;
+            font-weight: 300;
+            font-size: 20px;
+            color: #007AFF;
+        }
+
+        .mockup-c .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+        }
+
+        .mockup-c .filter-tab {
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #666;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .mockup-c .filter-tab.active {
+            color: #007AFF;
+            border-bottom-color: #007AFF;
+            font-weight: 600;
+        }
+
+        .mockup-c .task-card {
+            background: white;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .mockup-c .task-checkbox {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            border: 2px solid #d0d0d0;
+            border-radius: 50%;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .mockup-c .task-content {
+            flex: 1;
+            color: #333;
+        }
+
+        .mockup-c .task-meta {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+            margin-left: 36px;
+        }
+
+        .mockup-c .task-priority {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #666;
+            background: #f0f0f0;
+            margin-left: 8px;
+        }
+
+        /* ===== 비교 테이블 ===== */
+        .comparison-section {
+            margin-top: 60px;
+            padding: 24px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .comparison-section h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .comparison-table th {
+            background: #f9f9f9;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .comparison-table td {
+            color: #666;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .strength {
+            color: #27ae60;
+            font-weight: 500;
+        }
+
+        .weakness {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+
+        .selection-guide {
+            margin-top: 40px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+            color: #1565c0;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>할일 관리 앱 - 디자인 시안 비교</h1>
+        <p>3가지 디자인 시안을 비교하고 선택해주세요</p>
+    </div>
+
+    <div class="mockups-container">
+        <!-- ===== 시안 A: Apple Reminders 스타일 ===== -->
+        <div class="mockup">
+            <div class="mockup-info">
+                <div class="mockup-title">시안 A: 모던 미니멀</div>
+                <div class="mockup-philosophy">"가장 깔끔함. 오직 할 일과 입력만."</div>
+                <div class="mockup-details">
+                    <div class="detail-item">
+                        <div class="detail-label">철학</div>
+                        <div class="detail-value">Apple Reminders 스타일 - 극도로 미니멀</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">레이아웃</div>
+                        <div class="detail-value">입력 → 필터 → 리스트 (수직 단일)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">컬러</div>
+                        <div class="detail-value">흰색, 회색, 파란색 강조</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">강점</div>
+                        <div class="detail-value strength">가장 빠르고 깔끔함, 집중력 높음</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">약점</div>
+                        <div class="detail-value weakness">진도 정보 부족, 카테고리 시각화 약함</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">타겟</div>
+                        <div class="detail-value">민준 (빠르고 간단하게)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup-preview mockup-a">
+                <div class="app-header">할 일</div>
+                <div class="input-field">새로운 할 일</div>
+                <div class="filters">
+                    <button class="filter-tab active">전체</button>
+                    <button class="filter-tab">활성</button>
+                    <button class="filter-tab">완료</button>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">보고서 초안 작성</div>
+                    <div class="task-priority">높음</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">메일 답장</div>
+                    <div class="task-priority">중간</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">회의 준비</div>
+                    <div class="task-priority">높음</div>
+                </div>
+
+                <div class="task-item completed">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">점심 예약</div>
+                    <div class="task-priority">중간</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">데이터 분석</div>
+                    <div class="task-priority">중간</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 시안 B: 진도 바 강조 ===== -->
+        <div class="mockup">
+            <div class="mockup-info">
+                <div class="mockup-title">시안 B: 정보 풍부 미니멀</div>
+                <div class="mockup-philosophy">"필요한 정보를 한눈에. 진도와 카테고리 강조."</div>
+                <div class="mockup-details">
+                    <div class="detail-item">
+                        <div class="detail-label">철학</div>
+                        <div class="detail-value">진도 시각화 + 카테고리별 구분</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">레이아웃</div>
+                        <div class="detail-value">진도 바 → 입력 → 필터 → 리스트</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">컬러</div>
+                        <div class="detail-value">카테고리별 그라데이션 바</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">강점</div>
+                        <div class="detail-value strength">진도 한눈에 파악, 카테고리 시각화 우수</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">약점</div>
+                        <div class="detail-value weakness">상단 요소 많음, 모바일에서 스크롤 필요</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">타겟</div>
+                        <div class="detail-value">지은 (체계적으로 관리)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup-preview mockup-b">
+                <div class="app-header">할 일</div>
+
+                <div class="progress-section">
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>업무</span>
+                            <span>60%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>개인</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>쇼핑</span>
+                            <span>50%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-field">새로운 할 일</div>
+                <div class="filters">
+                    <button class="filter-tab active">전체</button>
+                    <button class="filter-tab">활성</button>
+                    <button class="filter-tab">완료</button>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">보고서 초안 작성</div>
+                    <div class="task-category">업무</div>
+                    <div class="task-priority">높음</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">메일 답장</div>
+                    <div class="task-category">업무</div>
+                    <div class="task-priority">중간</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">회의 준비</div>
+                    <div class="task-category">업무</div>
+                    <div class="task-priority">높음</div>
+                </div>
+
+                <div class="task-item">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">쇼핑 목록 정리</div>
+                    <div class="task-category">쇼핑</div>
+                    <div class="task-priority">낮음</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 시안 C: 카드 기반 ===== -->
+        <div class="mockup">
+            <div class="mockup-info">
+                <div class="mockup-title">시안 C: 카드 기반 미니멀</div>
+                <div class="mockup-philosophy">"각 항목을 독립적인 카드로. 여백과 그림자로 깊이 표현."</div>
+                <div class="mockup-details">
+                    <div class="detail-item">
+                        <div class="detail-label">철학</div>
+                        <div class="detail-value">카드 기반, 여백 강조, 부드러운 그림자</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">레이아웃</div>
+                        <div class="detail-value">입력 카드 → 필터 → 항목 카드 (수직)</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">컬러</div>
+                        <div class="detail-value">흰색 카드, 연한 배경, 미니멀 그림자</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">강점</div>
+                        <div class="detail-value strength">시각적으로 친근하고 현대적, 터치감 좋음</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">약점</div>
+                        <div class="detail-value weakness">세로 공간 더 필요, 정보 밀도 낮음</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">타겟</div>
+                        <div class="detail-value">둘 다 (친근하고 깔끔)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup-preview mockup-c">
+                <div class="app-header">할 일</div>
+
+                <div class="input-card">새로운 할 일</div>
+
+                <div class="filters">
+                    <button class="filter-tab active">전체</button>
+                    <button class="filter-tab">활성</button>
+                    <button class="filter-tab">완료</button>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-checkbox"></div>
+                    <div>
+                        <div class="task-content">보고서 초안 작성</div>
+                        <div class="task-meta">업무 • 높음</div>
+                    </div>
+                    <div class="task-priority">높음</div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-checkbox"></div>
+                    <div>
+                        <div class="task-content">메일 답장</div>
+                        <div class="task-meta">업무 • 중간</div>
+                    </div>
+                    <div class="task-priority">중간</div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-checkbox"></div>
+                    <div>
+                        <div class="task-content">회의 준비</div>
+                        <div class="task-meta">업무 • 높음</div>
+                    </div>
+                    <div class="task-priority">높음</div>
+                </div>
+
+                <div class="task-card">
+                    <div class="task-checkbox"></div>
+                    <div>
+                        <div class="task-content">쇼핑 목록 정리</div>
+                        <div class="task-meta">쇼핑 • 낮음</div>
+                    </div>
+                    <div class="task-priority">낮음</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 비교 테이블 ===== -->
+        <div class="comparison-section">
+            <h3>세 시안 비교</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>항목</th>
+                        <th>시안 A: 모던 미니멀</th>
+                        <th>시안 B: 정보 풍부</th>
+                        <th>시안 C: 카드 기반</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>로딩 속도감</strong></td>
+                        <td class="strength">매우 빠름</td>
+                        <td>빠름</td>
+                        <td>중간</td>
+                    </tr>
+                    <tr>
+                        <td><strong>정보 밀도</strong></td>
+                        <td>낮음</td>
+                        <td class="strength">높음</td>
+                        <td>중간</td>
+                    </tr>
+                    <tr>
+                        <td><strong>진도 시각화</strong></td>
+                        <td class="weakness">없음</td>
+                        <td class="strength">탁월함</td>
+                        <td>없음</td>
+                    </tr>
+                    <tr>
+                        <td><strong>카테고리 강조</strong></td>
+                        <td class="weakness">약함</td>
+                        <td class="strength">강함</td>
+                        <td>중간</td>
+                    </tr>
+                    <tr>
+                        <td><strong>시각적 친근성</strong></td>
+                        <td>높음</td>
+                        <td>중간</td>
+                        <td class="strength">매우 높음</td>
+                    </tr>
+                    <tr>
+                        <td><strong>모바일 최적화</strong></td>
+                        <td class="strength">최고</td>
+                        <td>좋음</td>
+                        <td>좋음</td>
+                    </tr>
+                    <tr>
+                        <td><strong>개발 복잡도</strong></td>
+                        <td class="strength">낮음</td>
+                        <td>중간</td>
+                        <td>중간</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="selection-guide">
+        <strong>📌 어떻게 선택할까요?</strong><br>
+        • <strong>시안 A:</strong> 민준(직장인)처럼 빠르고 깔끔하게 쓰고 싶다면<br>
+        • <strong>시안 B:</strong> 지은(대학생)처럼 카테고리와 진도를 체계적으로 관리하고 싶다면<br>
+        • <strong>시안 C:</strong> 둘 다의 장점을 원하고, 현대적이고 친근한 느낌을 원한다면<br>
+        <br>
+        <strong>💬 선택 후:</strong> 어떤 시안이 좋은지 알려주세요. 하이브리드(예: "B의 진도 바 + A의 심플함")도 가능합니다.
+    </div>
+
+</body>
+</html>
