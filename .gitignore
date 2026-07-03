@@ -26,9 +26,9 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+!.env.example
 
 # Legacy (firebase)
 _legacy-team-app
 firebase.json
 firestore.rules
-.env.example
