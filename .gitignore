@@ -32,3 +32,6 @@ Thumbs.db
 _legacy-team-app
 firebase.json
 firestore.rules
+
+.vercel
+.env*
